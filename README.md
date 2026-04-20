@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# HR Workflow Designer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual HR Workflow Designer built with React, TypeScript, and React Flow.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Drag and drop workflow canvas
+- 5 node types: Start, Task, Approval, Automated Step, End
+- Node configuration forms for each node type
+- Mock API layer for automated actions
+- Workflow simulation sandbox with step-by-step execution log
+- Validation (cycles, missing connections, missing nodes)
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + TypeScript
+- Vite
+- @xyflow/react (React Flow)
+- Zustand (state management)
 
-## Expanding the ESLint configuration
+## How to Run
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Clone the repository
+2. Install dependencies:
+   npm install
+3. Start the development server:
+   npm run dev
+4. Open http://localhost:5173 in your browser
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Architecture
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- src/components/ — All UI components
+- src/components/nodes/ — Custom node types (Start, Task, Approval, Automated, End)
+- src/components/WorkflowCanvas.tsx — Main React Flow canvas
+- src/components/Sidebar.tsx — Node palette sidebar
+- src/components/NodeFormPanel.tsx — Dynamic node editing forms
+- src/components/SandboxPanel.tsx — Workflow simulation panel
+- src/store/workflowStore.ts — Zustand global state store
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Design Decisions
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Used Zustand for simple global state without boilerplate
+- Each node type has its own component for easy extensibility
+- NodeFormPanel dynamically renders fields based on selected node type
+- Sandbox simulates workflow by traversing the graph from Start to End
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## What I Would Add With More Time
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Export/Import workflow as JSON
+- Undo/Redo functionality
+- Visual error indicators on nodes
+- Backend persistence with PostgreSQL
+- Authentication with OAuth
+- Auto-layout feature
+- Unit tests with Jest
